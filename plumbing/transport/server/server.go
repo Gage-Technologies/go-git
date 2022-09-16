@@ -157,9 +157,9 @@ func (s *upSession) UploadPack(ctx context.Context, req *packp.UploadPackRequest
 
 	log.Println("capabilities set: ", *s.caps)
 
-	if err := s.checkSupportedCapabilities(req.Capabilities); err != nil {
-		return nil, err
-	}
+	//if err := s.checkSupportedCapabilities(req.Capabilities); err != nil {
+	//	return nil, err
+	//}
 
 	s.caps = req.Capabilities
 
