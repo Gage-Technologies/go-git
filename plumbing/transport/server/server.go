@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/gage-technologies/go-git/v5/plumbing/protocol/packp/sideband"
 	"io"
+	"log"
 
 	"github.com/gage-technologies/go-git/v5/plumbing"
 	"github.com/gage-technologies/go-git/v5/plumbing/format/packfile"
@@ -145,7 +146,7 @@ func (s *upSession) UploadPack(ctx context.Context, req *packp.UploadPackRequest
 		return nil, err
 	}
 
-	fmt.Println("capabilities: ", s.caps)
+	log.Println("capabilities: ", s.caps)
 
 	if s.caps == nil {
 		s.caps = capability.NewList()
@@ -154,7 +155,7 @@ func (s *upSession) UploadPack(ctx context.Context, req *packp.UploadPackRequest
 		}
 	}
 
-	fmt.Println("capabilities set: ", *s.caps)
+	log.Println("capabilities set: ", *s.caps)
 
 	if err := s.checkSupportedCapabilities(req.Capabilities); err != nil {
 		return nil, err
