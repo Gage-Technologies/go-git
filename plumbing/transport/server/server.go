@@ -145,12 +145,16 @@ func (s *upSession) UploadPack(ctx context.Context, req *packp.UploadPackRequest
 		return nil, err
 	}
 
+	fmt.Println("capabilities: ", s.caps)
+
 	if s.caps == nil {
 		s.caps = capability.NewList()
 		if err := s.setSupportedCapabilities(s.caps); err != nil {
 			return nil, err
 		}
 	}
+
+	fmt.Println("capabilities set: ", *s.caps)
 
 	if err := s.checkSupportedCapabilities(req.Capabilities); err != nil {
 		return nil, err
