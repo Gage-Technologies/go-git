@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/gage-technologies/go-git/v5/plumbing/protocol/packp/sideband"
 	"io"
 
 	"github.com/gage-technologies/go-git/v5/plumbing"
@@ -167,7 +168,19 @@ func (s *upSession) UploadPack(ctx context.Context, req *packp.UploadPackRequest
 	}
 
 	pr, pw := ioutil.Pipe()
-	e := packfile.NewEncoder(pw, s.storer, false)
+
+	var e *packfile.Encoder
+	switch {
+	case s.caps.Supports(capability.Sideband):
+		mux := sideband.NewMuxer(sideband.Sideband, pw)
+		e = packfile.NewEncoder(mux, s.storer, false)
+	case s.caps.Supports(capability.Sideband64k):
+		mux := sideband.NewMuxer(sideband.Sideband64k, pw)
+		e = packfile.NewEncoder(mux, s.storer, false)
+	default:
+		e = packfile.NewEncoder(pw, s.storer, false)
+	}
+
 	go func() {
 		// TODO: plumb through a pack window.
 		_, err := e.Encode(objs, 10)
@@ -194,6 +207,18 @@ func (*upSession) setSupportedCapabilities(c *capability.List) error {
 	}
 
 	if err := c.Set(capability.OFSDelta); err != nil {
+		return err
+	}
+
+	if err := c.Set(capability.Sideband); err != nil {
+		return err
+	}
+
+	if err := c.Set(capability.Sideband64k); err != nil {
+		return err
+	}
+
+	if err := c.Set(capability.Shallow); err != nil {
 		return err
 	}
 
