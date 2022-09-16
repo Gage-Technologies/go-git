@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/go-git/go-git/v5"
-	. "github.com/go-git/go-git/v5/_examples"
-	"github.com/go-git/go-git/v5/plumbing/object"
+	"github.com/gage-technologies/go-git/v5"
+	. "github.com/gage-technologies/go-git/v5/_examples"
+	"github.com/gage-technologies/go-git/v5/plumbing/object"
 )
 
 // Basic example of how to commit changes to the current branch to an existing

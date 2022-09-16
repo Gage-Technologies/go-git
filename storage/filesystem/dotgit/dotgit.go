@@ -15,9 +15,9 @@ import (
 	"time"
 
 	"github.com/go-git/go-billy/v5/osfs"
-	"github.com/go-git/go-git/v5/plumbing"
-	"github.com/go-git/go-git/v5/storage"
-	"github.com/go-git/go-git/v5/utils/ioutil"
+	"github.com/gage-technologies/go-git/v5/plumbing"
+	"github.com/gage-technologies/go-git/v5/storage"
+	"github.com/gage-technologies/go-git/v5/utils/ioutil"
 
 	"github.com/go-git/go-billy/v5"
 )

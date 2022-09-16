@@ -5,7 +5,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/gage-technologies/go-git/v5/plumbing"
 )
 
 var (
